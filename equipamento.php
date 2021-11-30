@@ -16,15 +16,17 @@
     }
 </script>
 
+<h3>Equipamentos</h3>
 
-<h3>Setores</h3>
-
-<a href="setor_editar.php">Novo registro</a>
+<a href="equipamento_editar.php">Novo registro</a>
 
 <table width="100%">
     <tr>
         <th>ID</th>
-        <th>Nome</th>
+        <th>Descrição</th>
+        <th>UN</th>
+        <th>Estoque atual</th>
+        <th>Estoque mínimo</th>
         <th></th>
     </tr>
 
@@ -33,14 +35,17 @@
         $x = 0;
 
         $sql = "select
-                idsetor,
-                nome
+                idequipamento,
+                descricao,
+                un,
+                estoque,
+                minimo
             from
-                setor
+                equipamento
             where
                 data_exclusao is null
             order by
-                nome";
+                descricao";
         //executa a consulta e transforma em uma matriz $resultado
         $resultado = mysqli_query($conexao, $sql); 
         
@@ -50,16 +55,22 @@
             $x++; 
 
 
-            $idsetor = $dados['idsetor'];
-            $nome = $dados['nome'];
+            $idequipamento = $dados['idequipamento'];
+            $descricao = $dados['descricao'];
+            $un = $dados['un'];
+            $estoque = $dados['estoque'];
+            $minimo = $dados['minimo'];
 
             //alterna as cores conforme o resto da divisão do X por 2
             echo "<tr bgcolor=" . $cores[($x%2)] . ">
-                    <td align='center'>$idsetor</td>
-                    <td>$nome</td>
+                    <td align='center'>$idequipamento</td>
+                    <td>$descricao</td>
+                    <td align='center'>$un</td>
+                    <td align='center'>$estoque</td>
+                    <td align='center'>$minimo</td>
                     <td align='center' width='120'>
-                        <a href='setor_editar.php?idsetor=$idsetor'>Editar</a>                    
-                        <a href='setor_excluir.php?idsetor=$idsetor' onClick='return valida_exc();'>Excluir</a>                    
+                        <a href='equipamento_editar.php?idequipamento=$idequipamento'>Editar</a>                    
+                        <a href='equipamento_excluir.php?idequipamento=$idequipamento' onClick='return valida_exc();'>Excluir</a>                    
                     </td>
                 </tr>";
         }
