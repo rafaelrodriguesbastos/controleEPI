@@ -19,7 +19,7 @@ li:hover {
     <ul>
         <li><a href="setor.php">Setores</a></li>
         <li><a href="equipamento.php">Equipamentos</a></li>
-        <li><a href="#">Missão</a></li>
+        <li><a href="requisitante.php">Requisitantes</a></li>
         <li><a href="#">Links</a></li>
         <li><a href="#">Contato</a></li>
     </ul>
