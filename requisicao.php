@@ -16,17 +16,16 @@
     }
 </script>
 
-<h3>Equipamentos</h3>
 
-<a href="equipamento_editar.php">Novo registro</a>
+<h3>Requisições</h3>
+
+<a href="requisicao_editar.php">Novo registro</a>
 
 <table width="100%">
     <tr>
         <th>ID</th>
-        <th>Descrição</th>
-        <th>UN</th>
-        <th>Estoque atual</th>
-        <th>Estoque mínimo</th>
+        <th>Data / Hora</th>
+        <th>Requisitante</th>
         <th></th>
     </tr>
 
@@ -35,17 +34,16 @@
         $x = 0;
 
         $sql = "select
-                idequipamento,
-                descricao,
-                un,
-                estoque,
-                minimo
+                r.idrequisicao,
+                r.data_hora,
+                rt.nome as requisitante
             from
-                equipamento
+                requisicao r
+                left join requisitante rt on rt.idrequisitante = r.requisitante_idrequisitante
             where
-                data_exclusao is null
+                r.data_exclusao is null
             order by
-                descricao";
+                r.data_hora"; //colocar 'desc' para ordenar pela mais recente primeiro";
         //executa a consulta e transforma em uma matriz $resultado
         $resultado = mysqli_query($conexao, $sql); 
         
@@ -55,29 +53,19 @@
             $x++; 
 
 
-            $idequipamento = $dados['idequipamento'];
-            $descricao = $dados['descricao'];
-            $un = $dados['un'];
-            $estoque = $dados['estoque'];
-            $minimo = $dados['minimo'];
-
-            if ($estoque < $minimo) {
-                $destaque = "bgcolor='red'";
-            }
-            else {
-                $destaque = "bgcolor=" . $cores[($x%2)];
-            }
+            $idrequisicao = $dados['idrequisicao'];
+            $data_hora = $dados['data_hora'];
+            $requisitante = $dados['requisitante'];
 
             //alterna as cores conforme o resto da divisão do X por 2
-            echo "<tr $destaque>
-                    <td align='center'>$idequipamento</td>
-                    <td>$descricao</td>
-                    <td align='center'>$un</td>
-                    <td align='center'>$estoque</td>
-                    <td align='center'>$minimo</td>
-                    <td align='center' width='120'>
-                        <a href='equipamento_editar.php?idequipamento=$idequipamento'>Editar</a>                    
-                        <a href='equipamento_excluir.php?idequipamento=$idequipamento' onClick='return valida_exc();'>Excluir</a>                    
+            echo "<tr bgcolor=" . $cores[($x%2)] . ">
+                    <td align='center'>$idrequisicao</td>
+                    <td>$data_hora</td>
+                    <td>$requisitante</td>
+                    <td align='center' width='200'>
+                        <a href='requisicao_item.php?idrequisicao=$idrequisicao'>Itens</a>                    
+                        <a href='requisicao_editar.php?idrequisicao=$idrequisicao'>Editar</a>                    
+                        <a href='requisicao_excluir.php?idrequisicao=$idrequisicao' onClick='return valida_exc();'>Excluir</a>                    
                     </td>
                 </tr>";
         }
