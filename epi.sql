@@ -206,7 +206,7 @@ BEGIN
 	declare atual, novo decimal(4,1);
 	select estoque into atual from equipamento where idequipamento = id;
     set novo = atual + qtd;
-    update equipamento set estoque = novo;
+    update equipamento set estoque = novo where idequipamento = id;
     commit;
 END ;;
 DELIMITER ;
